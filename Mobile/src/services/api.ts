@@ -1,5 +1,5 @@
 const API_URL =
-  process.env.EXPO_PUBLIC_API_URL || 'http://localhost:8000'
+  process.env.EXPO_PUBLIC_API_URL || 'https://cardioia-backend-djsj.onrender.com'
 
 async function requisicao(endpoint: string) {
   const resposta = await fetch(`${API_URL}${endpoint}`)
