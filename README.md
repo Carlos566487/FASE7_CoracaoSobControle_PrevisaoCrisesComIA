@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://www.fiap.com.br/">
-    <img src="docs/images/logo-fiap.png" alt="FIAP" width="35%"/>
+    <img src="imagens/logo-fiap.png" alt="FIAP" width="35%"/>
   </a>
 </p>
 
@@ -62,7 +62,7 @@ FIAP — Inteligência Artificial · 2026
 | 📱 **Build Android (Expo EAS)** | [Build `03a7c9f0…`](https://expo.dev/accounts/taynaesteves-team/projects/cardioia/builds/03a7c9f0-903d-4607-918c-50ff9d60d865) | Status `Succeeded`, perfil `preview`, SDK 58 |
 | 📦 **APK para instalação** | [Baixar APK](https://expo.dev/artifacts/eas/7tdOKuCQB1dAh2fsRM4aLjKU9222JSKtFk8syvfqzsg.apk) | Link temporário do Expo (disponível por 13 dias a partir de 09/11/2026) |
 | 🔌 **Simulação IoT (Wokwi)** | https://wokwi.com/projects/479256586222505985 | ESP32 + MicroPython enviando leituras ao backend em produção |
-| 💻 **Repositório oficial** | https://github.com/JV-004/CardioIA-Fase7 | Pull Request de deploy: [#4](https://github.com/JV-004/CardioIA-Fase7/pull/4) (merged) |
+| 💻 **Repositório oficial** | https://github.com/Carlos566487/FASE7_CoracaoSobControle_PrevisaoCrisesComIA.git | Pull Request de deploy: [#4](https://github.com/Carlos566487/FASE7_CoracaoSobControle_PrevisaoCrisesComIA.git) (merged) |
 
 > [!TIP]
 > **Roteiro sugerido de avaliação (cerca de 5 minutos):**
@@ -530,22 +530,13 @@ git push origin feat/fase7-deploy
 
 ## 👥 14. Equipe
 
-| # | Função | Integrante | Principais entregas |
-|---|---|---|---|
-| 1 | 🚀 Engenheira de Deploy & DevOps | **Tayná Esteves** | Vercel (`vercel.json`, `VITE_API_URL`), EAS Build do APK, testes no emulador, PR #4 |
-| 2 | 🔧 Engenheiro de Backend & IoT | **João** | API FastAPI no Render, integração do modelo F6 e do Watson F5, firmware MicroPython, projeto Wokwi |
-| 3 | 🎨 Desenvolvedor de Interface | **Endrew Alves** | Painel Web (React + Vite) e app Mobile (React Native + Expo) |
-| 4 | 📄 Arquiteto & Documentador | **Carlos Souza** | Diagrama de arquitetura, README, relatório técnico e vídeo demonstrativo |
-
-| Nome | RM | Papel — Sprint 4 |
+| Nome | RM | Função |
 |---|---:|---|
-| Tayná Esteves | RM562491 | Integrante 1 — Engenharia de Governança & RPA |
-| João | RM565999 | Integrante 2 — Engenharia de IA & PLN (avaliação do modelo) |
-| Endrew Alves | RM563646 | Integrante 3 — Deploy & DevOps |
-| Carlos Eduardo | RM566487 | Integrante 4 — Documentação & Apresentação |
+| Tayná Esteves | RM562491 | 🚀 Engenheira de Deploy & DevOps |
+| João | RM565999 | 🔧 Engenheiro de Backend & IoT |
+| Endrew Alves | RM563646 | 🎨 Desenvolvedor de Interface |
+| Carlos Eduardo | RM566487 | 📄 Arquiteto & Documentador |
 
-> [!NOTE]
-> Papéis distribuídos segundo as 4 funções do enunciado da Sprint 4. Ajuste esta tabela se a divisão final do grupo for diferente.
 
 ## 👩‍🏫 15. Professores
 
