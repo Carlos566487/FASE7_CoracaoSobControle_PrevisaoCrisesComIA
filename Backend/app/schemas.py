@@ -76,6 +76,7 @@ class ResultadoRisco(BaseModel):
     features: dict[str, float] = Field(..., description="Valores efetivamente enviados ao modelo")
     features_padrao: list[str] = Field(..., description="Features preenchidas por valor padrão")
     aviso: str
+    resumo: Optional[str] = Field(None, description="Resumo textual do Analista de Risco (determinístico)")
 
 
 class RespostaLeitura(ResultadoRisco):

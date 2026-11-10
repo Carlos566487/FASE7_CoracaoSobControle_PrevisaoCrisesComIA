@@ -121,9 +121,9 @@ O protocolo de suporte respiratório usa **`spo2_media < 88`**, exatamente como 
 
 Para o "novo caso" da F6, o modelo retorna **1,00**, e não o 0,91 ilustrativo do enunciado. O motivo está explicado no README do modelo da F6: o caso aciona todos os limiares que geram o rótulo.
 
-## Extensão: orquestrador multiagente da F6
+## Enriquecimento local (papel dos agentes da F6)
 
-`services/risco.py::enriquecer_com_agentes()` é o ponto preparado para ligar os agentes da F6. Hoje a função devolve o resultado sem alterações. O código dos agentes não está neste repositório e nenhuma dependência de LLM foi adicionada. As instruções estão na docstring da função.
+`services/risco.py::enriquecer_com_agentes()` aplica, de forma determinística e sem LLM, dois papéis: o **Analista de Risco** gera o campo opcional `resumo` (faixa, risco e sinais que acionaram protocolos) e o **Planejador de Protocolos** ordena `recomendacoes` por prioridade clínica. `protocolos_acionados` e o OLED não mudam. O código dos agentes LLM da F6 não está neste repositório; para integrá-los, substitua o corpo da função.
 
 ## Deploy
 
@@ -166,5 +166,5 @@ O serviço **hiberna após ~15 min** sem tráfego. A primeira requisição segui
 ## Segurança
 
 - `X-Device-Key` é uma proteção **mínima** contra envio acidental de leituras. Como o projeto Wokwi é público, a chave usada no firmware é de demonstração e não é um segredo.
-- `modelo/modelo_pico_risco.joblib` usa pickle. Carregue apenas o artefato gerado pela F6.
+- `modelo/modelo_pico_risco.joblib` usa pickle. Antes de carregar, `predict.py` confere o SHA-256 contra `modelo_pico_risco.joblib.sha256` e recusa o arquivo se divergir. Ao retreinar o modelo, atualize esse arquivo (`Get-FileHash -Algorithm SHA256` ou `sha256sum`).
 - Os erros 500 e 503 não expõem stack trace.

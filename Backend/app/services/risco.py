@@ -7,13 +7,20 @@ from app.config import (
     AVISO, CONTEXTO_PADRAO, MAPA_SENSOR_FEATURE, SINAIS_PADRAO, Settings,
 )
 from app.schemas import ResultadoRisco
-from app.services.protocolos import avaliar_protocolos
+from app.services.protocolos import PROTOCOLO_EMERGENCIA, PROTOCOLOS, avaliar_protocolos
 from modelo.predict import carregar_modelo, prever_risco
 
 log = logging.getLogger(__name__)
 
 LARGURA_OLED = 21
 COR_POR_FAIXA = {"baixo": "verde", "moderado": "amarelo", "alto": "vermelho"}
+_PROTOCOLO_POR_CODIGO = {p.codigo: p for p in (*PROTOCOLOS, PROTOCOLO_EMERGENCIA)}
+# Do mais ao menos urgente (usado só para ordenar as recomendações).
+PRIORIDADE_PROTOCOLOS = (
+    "estado_emergencia", "suporte_respiratorio", "protocolo_choque", "monitoramento_intensivo",
+    "resposta_rapida", "protocolo_infeccioso", "triagem_emergencial", "unidades_temporarias",
+    "plano_contingencia", "redistribuir_insumos",
+)
 
 
 class ModeloIndisponivel(RuntimeError):
@@ -85,17 +92,36 @@ def linhas_oled(risco: float, faixa: str, features: dict[str, float], rotulos: l
 
 
 def enriquecer_com_agentes(features: dict[str, float], resultado: ResultadoRisco) -> ResultadoRisco:
-    """PONTO DE EXTENSÃO — orquestrador multiagente da F6 (não implementado nesta fase).
+    """Enriquecimento local, determinístico e sem LLM, no papel dos agentes da F6.
 
-    Para plugar os agentes da F6 (Analista de Risco, Planejador de Protocolos etc.):
-      1. copie o pacote dos agentes para Backend/agentes/ (o código não está neste repo);
-      2. aqui, chame o orquestrador com `features` e `resultado.risco` e devolva um
-         `resultado.model_copy(update={...})` com as recomendações enriquecidas;
-      3. mantenha `aviso` e `features_padrao` — a UI depende deles.
-    Não adicione dependência de LLM externo sem atualizar requirements.txt e .env.example.
-    Hoje devolve o resultado sem alterações.
+    - Analista de Risco: gera `resumo` com a faixa, o risco e os sinais que dispararam protocolos.
+    - Planejador de Protocolos: ordena `recomendacoes` por prioridade clínica (emergência e
+      suporte respiratório primeiro). `protocolos_acionados` e o OLED não mudam.
+
+    Mantém `aviso`, `features_padrao` e os demais campos, dos quais a UI depende. O código dos
+    agentes LLM da F6 não está neste repositório; para integrá-los, substitua o corpo desta função.
     """
-    return resultado
+    sinais = []
+    for codigo in resultado.protocolos_acionados:
+        protocolo = _PROTOCOLO_POR_CODIGO.get(codigo)
+        if protocolo and protocolo.feature in features:
+            sinais.append(f"{protocolo.feature}={features[protocolo.feature]:g}")
+    resumo = f"Risco {resultado.risco * 100:.0f}% ({resultado.faixa})."
+    if sinais:
+        resumo += " Sinais que acionaram protocolos: " + ", ".join(sinais) + "."
+    else:
+        resumo += " Nenhum protocolo acionado."
+
+    ordem = {codigo: i for i, codigo in enumerate(PRIORIDADE_PROTOCOLOS)}
+    pares = sorted(
+        zip(resultado.protocolos_acionados, resultado.recomendacoes),
+        key=lambda par: ordem.get(par[0], len(ordem)),
+    )
+    return resultado.model_copy(update={
+        "resumo": resumo,
+        "recomendacoes": [acao for _, acao in pares],
+    })
+
 
 
 def avaliar(features: dict[str, float], features_padrao: list[str], settings: Settings) -> ResultadoRisco:

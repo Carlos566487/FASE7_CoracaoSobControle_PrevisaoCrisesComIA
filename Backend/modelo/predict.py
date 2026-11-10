@@ -3,13 +3,17 @@
     from predict import prever_risco
     prever_risco({"idade_media": 62, ..., "disponibilidade_recursos": 25})  # -> float entre 0 e 1
 """
+import hashlib
 import json
+import logging
 import math
 from functools import lru_cache
 from pathlib import Path
 
 import joblib
 import pandas as pd
+
+log = logging.getLogger(__name__)
 
 DIR_MODELO = Path(__file__).resolve().parent
 CAMINHO_MODELO = DIR_MODELO / "modelo_pico_risco.joblib"
@@ -20,7 +24,29 @@ CAMINHO_FEATURES = DIR_MODELO / "features.json"
 def carregar_modelo(caminho=None):
     """Carrega o Pipeline treinado (uma vez por processo; resultado fica em cache)."""
     # joblib usa pickle: carregar apenas o .joblib gerado por treinar.py, nunca arquivo de terceiros.
+    # O artefato padrão tem a integridade conferida (SHA-256) antes do unpickle.
+    if not caminho:
+        _verificar_integridade(CAMINHO_MODELO)
     return joblib.load(Path(caminho) if caminho else CAMINHO_MODELO)
+
+
+def _verificar_integridade(caminho_modelo: Path) -> None:
+    """Compara o SHA-256 do .joblib com o arquivo `.sha256` ao lado dele.
+
+    Se o arquivo de hash não existir, apenas avisa (modelo retreinado sem atualizar o hash).
+    Se existir e divergir, recusa carregar, evitando executar um pickle adulterado.
+    """
+    caminho_hash = caminho_modelo.with_name(caminho_modelo.name + ".sha256")
+    if not caminho_hash.exists():
+        log.warning("Arquivo %s ausente: integridade do modelo não verificada.", caminho_hash.name)
+        return
+    esperado = caminho_hash.read_text(encoding="utf-8").split()[0].strip().lower()
+    atual = hashlib.sha256(caminho_modelo.read_bytes()).hexdigest()
+    if atual != esperado:
+        raise RuntimeError(
+            f"Integridade do modelo falhou: SHA-256 de {caminho_modelo.name} diverge de "
+            f"{caminho_hash.name}. Se o modelo foi retreinado, atualize o arquivo de hash."
+        )
 
 
 @lru_cache(maxsize=None)
