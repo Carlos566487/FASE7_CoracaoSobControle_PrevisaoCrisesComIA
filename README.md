@@ -27,9 +27,6 @@ FIAP — Inteligência Artificial · 2026
 
 </div>
 
-> [!IMPORTANT]
-> **Projeto acadêmico com dados simulados.** O CardioIA não faz diagnóstico clínico e não substitui avaliação médica. Toda resposta clínica da API traz o campo `aviso` com essa ressalva.
-
 ---
 
 ## 📑 Sumário
