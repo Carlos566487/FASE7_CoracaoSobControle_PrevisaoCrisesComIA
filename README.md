@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://www.fiap.com.br/">
-    <img src="imagens/logo-fiap.png" alt="FIAP" width="35%"/>
+    <img src="Imagens/logo-fiap.png" alt="FIAP" width="35%"/>
   </a>
 </p>
 
