@@ -1,3 +1,10 @@
+<p align="center">
+  <a href="https://www.fiap.com.br/">
+    <img src="docs/images/logo-fiap.png" alt="FIAP" width="35%"/>
+  </a>
+</p>
+
+
 <div align="center">
 
 # ❤️ CardioIA — Fase 7
@@ -312,10 +319,6 @@ npx eas build --platform android --profile preview
 
 *Figura 8 — Painel do Expo com o build `03a7c9f0-903d-4607-918c-50ff9d60d865`: perfil `preview`, SDK 58.0.0, versão 1.0.0, artefato **APK**, status **Succeeded** em 09/11/2026 (16 min 24 s de build).*
 
-![Resumo da validação do APK](Imagens/06-validacao-apk-emulador.jpg)
-
-*Figura 9 — Resumo da validação do APK no emulador Android Studio (`Medium_Phone_API_37.0`): instalação e abertura do app, comunicação com o Render, exibição dos indicadores e atualização com os dados do ESP32. Também foi registrada a execução da suíte do backend (90 testes aprovados).*
-
 **Instalação do APK em um Android:**
 
 1. No celular, abra o [link do APK](https://expo.dev/artifacts/eas/7tdOKuCQB1dAh2fsRM4aLjKU9222JSKtFk8syvfqzsg.apk). Também é possível usar o botão **Install** na [página do build](https://expo.dev/accounts/taynaesteves-team/projects/cardioia/builds/03a7c9f0-903d-4607-918c-50ff9d60d865), que mostra um QR Code.
@@ -474,14 +477,14 @@ CardioIA-Fase7/
 
 ## 📊 11. Mapa de atendimento aos critérios de avaliação
 
-| Critério (enunciado) | Pontos | Evidência neste README |
+| Critério (enunciado) | Evidência neste README |
 |---|---|---|
-| URLs funcionais (Vercel) e build mobile (`.apk` via EAS) acessíveis | 3,0 | [Seção 1](#-1-acesso-rápido-para-o-avaliador), [Seção 6](#-6-deploy-e-distribuição-parte-1), Figuras 6, 8 e 9 |
-| Unificação do backend com as interfaces e os motores de IA | 2,5 | [Seções 5.2 e 7](#-7-integração-do-ecossistema-parte-2), Figuras 6 e 7 |
-| Conversão e funcionamento da lógica dos sensores no Wokwi | 1,5 | [Seção 5.1](#51-iot--esp32-em-micropython-iot), Figuras 4, 5 e 7 |
-| Clareza do diagrama final e fluidez na comunicação dos dados | 1,5 | [Seções 3 e 4](#-3-arquitetura-final), Figuras 1, 2 e 3 |
-| Qualidade do README, do relatório PDF e da demonstração | 1,5 | Este documento; relatório e vídeo na [Seção 12](#-12-limitações-conhecidas-e-pendências) |
-| Grupo organizado de 4 a 5 integrantes | +1,0 | [Seção 14](#-14-equipe), Figura 10 |
+| URLs funcionais (Vercel) e build mobile (`.apk` via EAS) acessíveis | [Seção 1](#-1-acesso-rápido-para-o-avaliador), [Seção 6](#-6-deploy-e-distribuição-parte-1), Figuras 6, 8 e 9 |
+| Unificação do backend com as interfaces e os motores de IA  | [Seções 5.2 e 7](#-7-integração-do-ecossistema-parte-2), Figuras 6 e 7 |
+| Conversão e funcionamento da lógica dos sensores no Wokwi | [Seção 5.1](#51-iot--esp32-em-micropython-iot), Figuras 4, 5 e 7 |
+| Clareza do diagrama final e fluidez na comunicação dos dados  | [Seções 3 e 4](#-3-arquitetura-final), Figuras 1, 2 e 3 |
+| Qualidade do README, do relatório PDF e da demonstração  | Este documento; relatório e vídeo na [Seção 12](#-12-limitações-conhecidas-e-pendências) |
+| Grupo organizado de 4 a 5 integrantes  | [Seção 14](#-14-equipe), Figura 10 |
 
 ---
 
@@ -498,16 +501,6 @@ CardioIA-Fase7/
 | APK validado no emulador | O teste foi no Android Studio, não em um aparelho físico |
 | Link do APK temporário | O artefato expira no Expo; um novo build gera outro link |
 | Wokwi com a aba em segundo plano | A simulação fica lenta; mantenha a aba visível |
-
-### Itens a confirmar antes da submissão final
-
-- [ ] **`Mobile/eas.json` e `android.package`:** o build foi feito com o perfil `preview`, mas o `eas.json` não está versionado no repositório, e o `app.json` ainda não tem `android.package`. Os dois são pedidos no enunciado. Inclua os arquivos usados no build.
-- [ ] **Print do serviço no Render:** pedir ao responsável pelo backend (João).
-- [ ] **Confirmar na Vercel** o repositório, a branch conectada e as configurações de build.
-- [ ] **Relatório técnico em PDF** (até 5 páginas) com o diagrama da Figura 1.
-- [ ] **Vídeo demonstrativo** (até 5 min) do fluxo Wokwi → Render → Vercel/APK: incluir o link aqui.
-- [ ] **Watson:** confirmar o upload do Dialog skill no ambiente Draft. O painel Web mostra o assistente como "Disponível", mas as telas atuais não têm chat.
-- [ ] **Ir Além (opcional):** os notebooks de Process Mining (pm4py) e CBIR não estão no repositório.
 
 ---
 
@@ -544,9 +537,21 @@ git push origin feat/fase7-deploy
 | 3 | 🎨 Desenvolvedor de Interface | **Endrew Alves** | Painel Web (React + Vite) e app Mobile (React Native + Expo) |
 | 4 | 📄 Arquiteto & Documentador | **Carlos Souza** | Diagrama de arquitetura, README, relatório técnico e vídeo demonstrativo |
 
-![Funções dos integrantes](Imagens/07-funcoes-integrantes.jpg)
+| Nome | RM | Papel — Sprint 4 |
+|---|---:|---|
+| Tayná Esteves | RM562491 | Integrante 1 — Engenharia de Governança & RPA |
+| João | RM565999 | Integrante 2 — Engenharia de IA & PLN (avaliação do modelo) |
+| Endrew Alves | RM563646 | Integrante 3 — Deploy & DevOps |
+| Carlos Eduardo | RM566487 | Integrante 4 — Documentação & Apresentação |
 
-*Figura 10 — Divisão de funções combinada pelo grupo.*
+> [!NOTE]
+> Papéis distribuídos segundo as 4 funções do enunciado da Sprint 4. Ajuste esta tabela se a divisão final do grupo for diferente.
+
+## 👩‍🏫 15. Professores
+
+**Tutor turma A:** [Caique Nonato da Silva Bezerra](https://www.linkedin.com/in/caique-nonato/) — profcaique.bezerra@fiap.com.br  
+**Tutor turma R:** [Leonardo Ruiz Orabona](https://www.linkedin.com/in/leonardoorabona/) — profleonardo.orabona@fiap.com.br  
+**Coordenador:** [André Godoi Chiovato](https://www.linkedin.com/in/andregodoichiovato/) — profandre.chiovato@fiap.com.br
 
 ---
 
